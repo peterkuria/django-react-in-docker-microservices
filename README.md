@@ -37,6 +37,7 @@ pipenv --three && pipenv shell
 (backend) $ django-admin startproject backend . && cd backend
 
 (backend) $ pipenv install Django && pipenv install djangorestframework && pipenv install aloe-django
+(backend) $ python manage.py migrate
 (backend) $ python manage.py startapp
 
 ```
@@ -69,7 +70,7 @@ $ git commit -am "added and committed READme.md"
 $ git remote add origin git@github.com:peterkuria/django-react-in-docker-microservices.git
 
 # You should disable email privacy to enable push
-$ git push -u origin master
+$ git push origin master
 ```
 
 ## Run the tests
@@ -105,21 +106,43 @@ Navigate to the root directory and
 $ cd ~/django-react-in-docker-microservices
 $ cd frontend
 # bootstrap your react app with create-react-app
-npx create-react-app my-app
-cd my-app
-npm start
-
+# npx create-react-app my-app
 $ yarn create react-app frontend
-$ cd frontend
+
+Success! Created frontend at ~\django-react-in-docker-microservices\frontend\frontend
+Inside that directory, you can run several commands:
+
+  yarn start
+    Starts the development server.
+
+  yarn build
+    Bundles the app into static files for production.
+
+  yarn test
+    Starts the test runner.
+
+  yarn eject
+    Removes this tool and copies build dependencies, configuration files    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd frontend
+  yarn start
+
+Happy hacking!
+Done in 368.18s.
+
+```
 
 We can now run our React app with the command yarn start.
 
-$ yarn start
+\$ yarn start
 
-We only need to update the App.js file.
+Update this App.js file.
 
-Our /api endpoint is in JSON. Mine looks like this:
+Our /api endpoint is in JSON. Your file will look like this:
 
+```JSON
 [
   {
     "id":1,
@@ -141,49 +164,50 @@ Our /api endpoint is in JSON. Mine looks like this:
 
 We can mock that up in our React app in a variable list, load that list into our state, and then use map() to display all the items. Here’s the code.
 
+```javascript
 // App.js
-import React, { Component } from 'react';
+import React, { Component } from "react"
 
 const list = [
-{
-'id': 1,
-'title': '1st Item',
-'description': 'Description here.'
-},
-{
-'id': 2,
-'title': '2nd Item',
-'description': 'Another description here.'
-},
-{
-'id': 3,
-'title': '3rd Item',
-'description': 'Third description here.'
-}
-];
+	{
+		id: 1,
+		title: "1st Item",
+		description: "Description here."
+	},
+	{
+		id: 2,
+		title: "2nd Item",
+		description: "Another description here."
+	},
+	{
+		id: 3,
+		title: "3rd Item",
+		description: "Third description here."
+	}
+]
 
 class App extends Component {
-constructor(props) {
-super(props);
-this.state = { list };
+	constructor(props) {
+		super(props)
+		this.state = { list }
+	}
+
+	render() {
+		return (
+			<div>
+				{this.state.list.map(item => (
+					<div>
+						<h1>{item.title}</h1>
+						<span>{item.description}</span>
+					</div>
+				))}
+			</div>
+		)
+	}
 }
 
-render() {
-return (
-
-<div>
-{this.state.list.map(item => (
-<div>
-<h1>{item.title}</h1>
-<span>{item.description}</span>
-</div>
-))}
-</div>
-);
-}
-}
-
-export default App;
+export default App
+```
 
 ## Add your Nginx
 
@@ -219,7 +243,5 @@ server {
     }
 
 }
-
-
 
 ```
