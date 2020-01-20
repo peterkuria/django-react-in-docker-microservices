@@ -27,8 +27,6 @@ pipenv --three && pipenv shell
 
 ```
 
-#
-
 ## start development: add dependencies
 
 1. Install the requirements using pipenv : Django and djangorestframework, aloe-django
