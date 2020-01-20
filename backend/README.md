@@ -1,7 +1,5 @@
 # A Django + GraphQL + Apollo + React Stack Demo
 
-
-
 In this workshop, we will address the following topics:
 
 ## [Part 1: The Backend](#part1)
