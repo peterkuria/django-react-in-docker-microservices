@@ -1,0 +1,41 @@
+# The frontend framework used is Vue.js and all static web files are
+# finally served with a minimalistic web container based on nginx. The
+# Dockerfile for this static web server looks like this:
+
+
+# As you can see, it’s a multi-stage build. The build state will use
+# a node alpine image as the base and essentially run the build process.
+# Under the hood, vue uses webpack to combine all resources to the
+# static dist directory . The second stage takes the static resources
+#  and adds them to a nginx container, again based on alpine. The
+#  results is a container image with about 20MB.
+
+# build stage
+FROM node:lts-alpine as builder
+WORKDIR /app
+
+# install app dependencies
+# ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+# COPY package*.json ./
+COPY package*.json ./app/package.json
+RUN yarn install
+RUN npm install react-scripts@2.1.2 -g --silent
+
+# set environment variables
+ARG REACT_APP_USERS_SERVICE_URL
+ENV REACT_APP_USERS_SERVICE_URL $REACT_APP_USERS_SERVICE_URL
+ARG NODE_ENV
+ENV NODE_ENV $NODE_ENV
+
+# create build
+# COPY . /usr/src/app
+COPY . .
+RUN npm run build
+
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+

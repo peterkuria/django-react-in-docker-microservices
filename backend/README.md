@@ -61,15 +61,15 @@ We will chose Django for this, so the first thing we want to do is to create a
 new Django project. If you are new to Python, you need to read about [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), first.
 
 ```bash
-mkdir -p ~/Projects/django-graphql-apollo-react-demo/src
-cd ~/Projects/django-graphql-apollo-react-demo/src
-mkvirtualenv django-graphql-apollo-react-demo
+mkdir -p ~/django-react-in-docker-microservices/backend
+cd ~/django-react-in-docker-microservices/backend
+mkvirtualenv django-react-in-docker-microservices
 pip install django
 pip install pytest
 pip install pytest-django
 pip install pytest-cov
 pip install mixer
-django-admin startproject backend
+django-admin startproject backend .
 cd backend
 ./manage.py migrate
 ./manage.py createsuperuser
@@ -125,7 +125,7 @@ Twitter-like app that allows users to create messages. It's a nice example for
 an app that has a CreateView, a ListView and a DetailView.
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/backend
+cd ~/django-react-in-docker-microservices/backend/backend
 django-admin startapp simple_app
 cd simple_app
 mkdir tests
@@ -200,7 +200,7 @@ admin.site.register(models.Message)
 Whenever we make changes to a model, we need to create and run a migration:
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/backend
+cd ~/django-react-in-docker-microservices/backend/backend
 ./manage.py makemigrations simple_app
 ./manage.py migrate
 ```
@@ -215,7 +215,7 @@ Since we have now a Django project with a model, we can start thinking about
 adding an API. We will use GraphQL for that.
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/backend
+cd ~/django-react-in-docker-microservices/backend/backend
 pip install graphene-django
 ```
 
@@ -534,7 +534,7 @@ during local development, the backend and the frontend are served from
 different ports, so we need to enable to accept requests from all origins.
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/backend
+cd ~/django-react-in-docker-microservices/backend/backend
 pip install djangorestframework
 pip install djangorestframework-jwt
 pip install django-cors-headers
@@ -619,7 +619,7 @@ Facebook has released a wonderful command line tool that kickstarts a new
 ReactJS project with a powerful webpack configuration. Let's use that:
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src
+cd ~/django-react-in-docker-microservices/backend
 npm install -g create-react-app
 create-react-app frontend
 cd frontend
@@ -631,7 +631,7 @@ yarn start
 ## <a name="add-react-router"></a>Add ReactRouter to React
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/frontend
+cd ~/django-react-in-docker-microservices/backend/frontend
 yarn add react-router-dom
 ```
 
@@ -677,7 +677,7 @@ You will notice that we imported a bunch of views that don't yet exist. Let's
 create them:
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/frontend/src/
+cd ~/django-react-in-docker-microservices/backend/frontend/src/
 mkdir views
 touch views/CreateView.js
 touch views/DetailView.js
@@ -708,7 +708,7 @@ export default class ListView extends React.Component {
 We can now add Apollo to the mix. First we need to install it via yarn:
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/frontend/
+cd ~/django-react-in-docker-microservices/backend/frontend/
 yarn add react-apollo
 ```
 
@@ -876,7 +876,7 @@ to the request, if a valid token has been sent.
 Let's start with the server:
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/backend/backend/
+cd ~/django-react-in-docker-microservices/backend/backend/backend/
 touch middleware.py
 ```
 
@@ -1378,7 +1378,7 @@ Let's update our ListView and add a search field. We will use the `query-string`
 module to parse the query string in the URL (i.e. `?search=foo`).
 
 ```bash
-cd ~/Projects/django-graphql-apollo-react-demo/src/frontend/
+cd ~/django-react-in-docker-microservices/backend/frontend/
 yarn add query-string
 ```
 
